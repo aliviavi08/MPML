@@ -16,48 +16,33 @@ def main():
     # Form for input
     with st.form(key='prediction_form'):
         gender = st.selectbox('Gender', ['Male', 'Female'])
-        marital_status = st.selectbox('Marital Status', ['Single', 'Married', 'Prefer Not to Say'])
+        marital_status = st.selectbox('Marital_Status', ['Single', 'Married', 'Prefer Not to Say'])
         occupation = st.selectbox('Occupation', ['Employee', 'Student', 'Self Employed', 'House Wife', 'Other'])
-        monthly_income = st.selectbox('Monthly Income', ['No Income', 'Below Rs.10000', '10001 to 25000', '25001 to 50000', 'More than 50000'])
-        educational_qualifications = st.selectbox('Educational Qualifications', ['Graduate', 'Post Graduate', 'Ph.D', 'School', 'Uneducated'])
+        monthly_income = st.selectbox('Monthly_Income', ['No Income', 'Below Rs.10000', '10001 to 25000', '25001 to 50000', 'More than 50000'])
+        educational_qualifications = st.selectbox('Educational_Qualifications', ['Graduate', 'Post Graduate', 'Ph.D', 'School', 'Uneducated'])
         feedback = st.selectbox('Feedback', ['Positive', 'Negative'])
         age = st.number_input('Age', min_value=0)
-        family_size = st.number_input('Family Size', min_value=1, max_value=10)
+        family_size = st.number_input('Family_Size', min_value=1, max_value=10)
         latitude = st.number_input('Latitude')
         longitude = st.number_input('Longitude')
-        pin_code = st.number_input('Pin Code')
+        pin_code = st.number_input('Pin_Code')
 
         submit_button = st.form_submit_button(label='Predict')
 
         if submit_button:
-            # Mapping for categorical variables
-            gender_map = {'Male': 0, 'Female': 1}
-            marital_status_map = {'Single': 0, 'Married': 1, 'Prefer Not to Say': 2}
-            occupation_map = {'Employee': 0, 'Student': 1, 'Self Employed': 2, 'House Wife': 3, 'Other': 4}
-            income_map = {'No Income': 0, 'Below Rs.10000': 1, '10001 to 25000': 2, '25001 to 50000': 3, 'More than 50000': 4}
-            education_map = {'Graduate': 0, 'Post Graduate': 1, 'Ph.D': 2, 'School': 3, 'Uneducated': 4}
-            feedback_map = {'Positive': 1, 'Negative': 0}
-
-            # Convert to numerical values
+            # Convert inputs into a DataFrame with correct column names
             data = pd.DataFrame({
-                'Gender': [gender_map[gender]],
-                'Marital_Status': [marital_status_map[marital_status]],
-                'Occupation': [occupation_map[occupation]],
-                'Monthly_Income': [income_map[monthly_income]],
-                'Educational_Qualifications': [education_map[educational_qualifications]],
-                'Feedback': [feedback_map[feedback]],
-                'Age': [age],
+                'Gender': [gender],
+                'Marital_Status': [marital_status],
+                'Occupation': [occupation],
+                'Monthly_Income': [monthly_income],
+                'Educational_Qualifications': [educational_qualifications],
                 'Family_Size': [family_size],
                 'Latitude': [latitude],
                 'Longitude': [longitude],
-                'Pin_Code': [pin_code]
+                'Pin_Code': [pin_code],
+                'Feedback': [feedback]
             })
-
-            # Ensure the columns are in the correct order as per training data
-            expected_features = ['Gender', 'Marital_Status', 'Occupation', 'Monthly_Income',
-                                 'Educational_Qualifications', 'Feedback', 'Age', 'Family_Size',
-                                 'Latitude', 'Longitude', 'Pin_Code']
-            data = data[expected_features]
 
             # Predict
             try:
