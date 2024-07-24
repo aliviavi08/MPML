@@ -44,7 +44,7 @@ def main():
                 'Marital_Status': [marital_status_map[marital_status]],
                 'Occupation': [occupation_map[occupation]],
                 'Monthly_Income': [income_map[monthly_income]],
-                'Educational Qualifications': [education_map[educational_qualifications]],
+                'Educational_Qualifications': [education_map[educational_qualifications]],
                 'Feedback': [feedback_map[feedback]],
                 'Age': [age],
                 'Family_Size': [family_size],
@@ -53,9 +53,11 @@ def main():
                 'Pin_Code': [pin_code]
             })
 
-            # Ensure the order of columns matches the training data
-            # Adjust column names as needed based on training data
-            # e.g., model expects 'Age', 'Gender', ... in a specific order
+            # Ensure the columns are in the correct order as per training data
+            expected_features = ['Gender', 'Marital_Status', 'Occupation', 'Monthly_Income',
+                                 'Educational_Qualifications', 'Feedback', 'Age', 'Family_Size',
+                                 'Latitude', 'Longitude', 'Pin_Code']
+            data = data[expected_features]
 
             # Predict
             try:
