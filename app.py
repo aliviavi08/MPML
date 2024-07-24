@@ -7,7 +7,7 @@ import os
 import joblib
 
 # Tentukan jalur absolut untuk file model
-model_path = os.path.join('/mount/src/mpml', 'model.pkl')
+model_path = os.path.join('/mount/src/mpml', 'best_model.pkl')
 print(f"Attempting to load model from: {model_path}")
 
 if not os.path.isfile(model_path):
@@ -18,7 +18,7 @@ model = joblib.load(model_path)
 import os
 import joblib
 
-model_path = os.path.join('/mount/src/mpml', 'model.pkl')
+model_path = os.path.join('/mount/src/mpml', 'best_model.pkl')
 print(f"Attempting to load model from: {model_path}")
 
 if os.path.isfile(model_path):
