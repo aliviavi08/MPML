@@ -33,16 +33,16 @@ def main():
     # Form for input
     with st.form(key='prediction_form'):
         gender = st.selectbox('Gender', ['Male', 'Female'])
-        marital_status = st.selectbox('Marital Status', ['Single', 'Married', 'Prefer Not to Say'])
+        marital_status = st.selectbox('Marital_Status', ['Single', 'Married', 'Prefer Not to Say'])
         occupation = st.selectbox('Occupation', ['Employee', 'Student', 'Self Employed', 'House Wife', 'Other'])
-        monthly_income = st.selectbox('Monthly Income', ['No Income', 'Below Rs.10000', '10001 to 25000', '25001 to 50000', 'More than 50000'])
+        monthly_income = st.selectbox('Monthly_Income', ['No Income', 'Below Rs.10000', '10001 to 25000', '25001 to 50000', 'More than 50000'])
         educational_qualifications = st.selectbox('Educational Qualifications', ['Graduate', 'Post Graduate', 'Ph.D', 'School', 'Uneducated'])
         feedback = st.selectbox('Feedback', ['Positive', 'Negative'])
         age = st.number_input('Age', min_value=0)
-        family_size = st.number_input('Family Size', min_value=1, max_value=10)
+        family_size = st.number_input('Family_Size', min_value=1, max_value=10)
         latitude = st.number_input('Latitude')
         longitude = st.number_input('Longitude')
-        pin_code = st.number_input('Pin Code')
+        pin_code = st.number_input('Pin_Code')
 
         submit_button = st.form_submit_button(label='Predict')
 
@@ -50,15 +50,15 @@ def main():
             # Create DataFrame for prediction
             data = pd.DataFrame({
                 'Gender': [gender],
-                'Marital Status': [marital_status],
+                'Marital_Status': [marital_status],
                 'Occupation': [occupation],
-                'Monthly Income': [monthly_income],
+                'Monthly_Income': [monthly_income],
                 'Educational Qualifications': [educational_qualifications],
                 'Feedback': [feedback],
                 'Age': [age],
-                'Family size': [family_size],
-                'latitude': [latitude],
-                'longitude': [longitude],
+                'Family_Size': [family_size],
+                'Latitude': [latitude],
+                'Longitude': [longitude],
                 'Pin code': [pin_code]
             })
 
