@@ -1,34 +1,17 @@
 import streamlit as st
 import joblib
 import pandas as pd
-
-# Ganti dengan jalur absolut ke file model Anda
 import os
-import joblib
 
-# Tentukan jalur absolut untuk file model
+# Load the model
 model_path = os.path.join('/mount/src/mpml', 'best_model.pkl')
-print(f"Attempting to load model from: {model_path}")
-
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"Model file {model_path} does not exist.")
-
 model = joblib.load(model_path)
 
-import os
-import joblib
-
-model_path = os.path.join('/mount/src/mpml', 'best_model.pkl')
-print(f"Attempting to load model from: {model_path}")
-
-if os.path.isfile(model_path):
-    print(f"File {model_path} found.")
-else:
-    print(f"File {model_path} does not exist.")
- 
 # Streamlit application
 def main():
-    st.title('Welcome to the Customer App')
+    st.title('Customer Prediction App')
 
     # Form for input
     with st.form(key='prediction_form'):
@@ -47,24 +30,39 @@ def main():
         submit_button = st.form_submit_button(label='Predict')
 
         if submit_button:
-            # Create DataFrame for prediction
+            # Mapping for categorical variables
+            gender_map = {'Male': 0, 'Female': 1}
+            marital_status_map = {'Single': 0, 'Married': 1, 'Prefer Not to Say': 2}
+            occupation_map = {'Employee': 0, 'Student': 1, 'Self Employed': 2, 'House Wife': 3, 'Other': 4}
+            income_map = {'No Income': 0, 'Below Rs.10000': 1, '10001 to 25000': 2, '25001 to 50000': 3, 'More than 50000': 4}
+            education_map = {'Graduate': 0, 'Post Graduate': 1, 'Ph.D': 2, 'School': 3, 'Uneducated': 4}
+            feedback_map = {'Positive': 1, 'Negative': 0}
+
+            # Convert to numerical values
             data = pd.DataFrame({
-                'Gender': [gender],
-                'Marital_Status': [marital_status],
-                'Occupation': [occupation],
-                'Monthly_Income': [monthly_income],
-                'Educational Qualifications': [educational_qualifications],
-                'Feedback': [feedback],
+                'Gender': [gender_map[gender]],
+                'Marital_Status': [marital_status_map[marital_status]],
+                'Occupation': [occupation_map[occupation]],
+                'Monthly_Income': [income_map[monthly_income]],
+                'Educational Qualifications': [education_map[educational_qualifications]],
+                'Feedback': [feedback_map[feedback]],
                 'Age': [age],
                 'Family_Size': [family_size],
                 'Latitude': [latitude],
                 'Longitude': [longitude],
-                'Pin code': [pin_code]
+                'Pin_Code': [pin_code]
             })
 
+            # Ensure the order of columns matches the training data
+            # Adjust column names as needed based on training data
+            # e.g., model expects 'Age', 'Gender', ... in a specific order
+
             # Predict
-            prediction = model.predict(data)[0]
-            st.write(f'Prediction: {prediction}')
+            try:
+                prediction = model.predict(data)[0]
+                st.write(f'Prediction: {prediction}')
+            except ValueError as e:
+                st.error(f"Prediction error: {e}")
 
 if __name__ == "__main__":
     main()
