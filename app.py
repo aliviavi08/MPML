@@ -40,9 +40,13 @@ def main():
                 'Family_Size': [family_size]
             })
 
-            # Predict
-            prediction = model.predict(data)[0]
-            st.write(f'Prediction: {"Yes" if prediction == 1 else "No"}')
+            # Predict probabilities
+            proba = model.predict_proba(data)[0]
+            st.write(f'Probability - No: {proba[0]:.2f}, Yes: {proba[1]:.2f}')
+            
+            # Predict based on probabilities
+            prediction = 'Yes' if proba[1] > 0.5 else 'No'
+            st.write(f'Prediction: {prediction}')
 
 if __name__ == "__main__":
     main()
