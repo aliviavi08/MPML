@@ -40,13 +40,14 @@ def main():
                 'Family_Size': [family_size]
             })
 
-            # Predict probabilities
-            proba = model.predict_proba(data)[0]
-            st.write(f'Probability - No: {proba[0]:.2f}, Yes: {proba[1]:.2f}')
-            
-            # Predict based on probabilities
-            prediction = 'Yes' if proba[1] > 0.5 else 'No'
-            st.write(f'Prediction: {prediction}')
+            # Ensure the input data includes all necessary columns for prediction
+            for col in model.feature_names_in_:
+                if col not in data.columns:
+                    data[col] = 0  # Default value for missing columns
+
+            # Predict
+            prediction = model.predict(data)[0]
+            st.write(f'Prediction: {"Yes" if prediction == 1 else "No"}')
 
 if __name__ == "__main__":
     main()
