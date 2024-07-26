@@ -44,5 +44,5 @@ def main():
             prediction = model.predict(data)[0]
             st.write(f'Customer Feedback Prediction: {"Positive" if prediction == 1 else "Negative"}')
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
