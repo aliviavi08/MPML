@@ -11,7 +11,7 @@ model = joblib.load(model_path)
 
 # Streamlit application
 def main():
-    st.title('Customer Prediction App')
+    st.title('Customer Feedback Prediction App')
 
     # Form for input
     with st.form(key='prediction_form'):
@@ -42,7 +42,7 @@ def main():
 
             # Predict
             prediction = model.predict(data)[0]
-            st.write(f'Prediction: {"Yes" if prediction == 1 else "No"}')
+            st.write(f'Customer Feedback Prediction: {"Positive" if prediction == 1 else "Negative"}')
 
 if __name__ == "__main__":
     main()
