@@ -11,7 +11,7 @@ model = joblib.load(model_path)
 
 # Streamlit application
 def main():
-    st.title('Customer Feedback Prediction App')
+    st.title('Customer Prediction App')
 
     # Form for input
     with st.form(key='prediction_form'):
@@ -40,9 +40,17 @@ def main():
                 'Family_Size': [family_size]
             })
 
-            # Predict
+            # Ensure the input data includes all necessary columns for prediction
+            for col in model.feature_names_in_:
+                if col not in data.columns:
+                    data[col] = 0  # Default value for missing columns
+
+            # Predict and get prediction probabilities
             prediction = model.predict(data)[0]
-            st.write(f'Customer Feedback Prediction: {"Positive" if prediction == 1 else "Negative"}')
+            prediction_proba = model.predict_proba(data)[0]
+
+            st.write(f'Prediction: {"Yes" if prediction == 1 else "No"}')
+            st.write(f'Prediction Probability: {prediction_proba}')
 
 if __name__ == "__main__":
     main()
